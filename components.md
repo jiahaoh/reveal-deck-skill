@@ -296,7 +296,9 @@ Flex container that fills remaining space. The scaffold auto-initializes Chart.j
 | `.flex-1` | Flex grow |
 | `.flex-row` | Horizontal flex |
 | `.flex-col` | Vertical flex |
-| `.gap-sm` / `.gap-md` / `.gap-lg` | Gap sizes |
+| `.gap-sm` | 0.4rem gap |
+| `.gap-md` | 0.8rem gap |
+| `.gap-lg` | 1.2rem gap |
 
 ---
 

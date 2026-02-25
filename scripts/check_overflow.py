@@ -47,7 +47,7 @@ def check_overflow(html_path: str) -> list[dict]:
         """)
 
         for idx in indices:
-            h, v = idx["h"], idx["v"]
+            h, v = idx["h"], idx["v"] or 0
             page.evaluate(f"Reveal.slide({h}, {v})")
             page.wait_for_timeout(100)
 

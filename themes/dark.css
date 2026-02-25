@@ -7,7 +7,7 @@
 :root {
   /* Core colors */
   --color-bg: #0d1117;
-  --color-text: #c9d1d9;
+  --color-text: #d1d9e1;
   --color-text-dark: #e6edf3;
   --color-text-muted: #8b949e;
   --color-text-faint: #6e7681;
@@ -26,7 +26,13 @@
   --font-body: 'IBM Plex Sans', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
   --fs-base: 16pt;
-  --fs-slide-title: 1.35rem;
+  --fs-slide-title: 16.2pt;
+  --fs-sm: 8.2pt;
+  --fs-lg: 10.6pt;
+  --fs-xl: 12.0pt;
+  --fs-2xl: 14.4pt;
+  --fs-3xl: 18.0pt;
+  --fs-4xl: 24.0pt;
 
   /* Spacing */
   --sp-header-v: 1.0rem;
@@ -34,12 +40,17 @@
   --sp-body-v: 1.5rem;
   --sp-body-h: 2.4rem;
   --sp-body-gap: 1.1rem;
+  --sp-xs: 0.4rem;
+  --sp-sm: 0.65rem;
+  --sp-md: 1rem;
+  --sp-lg: 1.5rem;
+  --sp-xl: 2.4rem;
 
   /* Reveal.js overrides */
   --r-background-color: #0d1117;
   --r-main-font: 'IBM Plex Sans', sans-serif;
   --r-main-font-size: 16pt;
-  --r-main-color: #c9d1d9;
+  --r-main-color: #d1d9e1;
   --r-heading-font: 'IBM Plex Sans', sans-serif;
   --r-heading-color: #f0f6fc;
   --r-heading-font-weight: 700;

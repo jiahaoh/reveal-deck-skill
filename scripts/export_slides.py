@@ -51,6 +51,9 @@ def export_slides(html_path: str, output_dir: str, scale: int, slide_spec: str |
         page.goto(f"file://{html_path}")
         page.wait_for_timeout(1500)  # Wait for fonts, reveal.js, charts
 
+        # Disable transitions so screenshots capture clean frames
+        page.evaluate("Reveal.configure({ transition: 'none', backgroundTransition: 'none', controls: false, progress: false })")
+
         # Get all slide indices
         indices = page.evaluate("""
             (() => {
@@ -69,7 +72,7 @@ def export_slides(html_path: str, output_dir: str, scale: int, slide_spec: str |
             if requested and num not in requested:
                 continue
 
-            h, v = idx["h"], idx["v"]
+            h, v = idx["h"], idx["v"] or 0
             page.evaluate(f"Reveal.slide({h}, {v})")
             page.wait_for_timeout(300)  # Wait for transitions + rendering
 

@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swiss Theme Demo</title>
+
+  <!-- Reveal.js core -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reveal.css">
+
+  <!-- Syntax highlighting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/plugin/highlight/monokai.css">
+
+  <!-- KaTeX math -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Presentation styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- SLIDE 1: title -->
+      <section class="title-slide" data-slide-id="1">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center">
+          <h1>Machine Learning in Production</h1>
+          <p class="subtitle">From Prototype to Scale — Lessons from Deploying 50 Models</p>
+        </div>
+        <p class="author-date">Jane Chen &middot; ML Infrastructure &middot; February 2026</p>
+        <aside class="notes">Welcome everyone. Today I'll share what we learned deploying ML models at scale over the past two years.</aside>
+      </section>
+
+      <!-- SLIDE 2: overview -->
+      <section data-slide-id="2">
+        <div class="slide-header">
+          <h2>Platform Architecture</h2>
+        </div>
+        <div class="content">
+          <div class="module-grid">
+            <div class="module">
+              <h4>Feature Store</h4>
+              <p>Centralized feature registry with versioning, lineage tracking, and online/offline serving</p>
+            </div>
+            <div class="module">
+              <h4>Training Engine</h4>
+              <p>Distributed training on GPU clusters with automatic hyperparameter optimization</p>
+            </div>
+            <div class="module">
+              <h4>Model Registry</h4>
+              <p>Artifact storage with approval workflows, A/B test configs, and rollback support</p>
+            </div>
+            <div class="module">
+              <h4>Serving Layer</h4>
+              <p>Low-latency inference via gRPC with autoscaling, batching, and circuit breakers</p>
+            </div>
+          </div>
+          <div class="pipeline-flow">
+            <span>Ingest</span><span class="pipeline-arrow">&rarr;</span>
+            <span>Transform</span><span class="pipeline-arrow">&rarr;</span>
+            <span>Train</span><span class="pipeline-arrow">&rarr;</span>
+            <span>Deploy</span>
+          </div>
+          <div class="stat-row">
+            <div class="stat-box">
+              <p class="stat-value">50+</p>
+              <p class="stat-label">Models in prod</p>
+            </div>
+            <div class="stat-box">
+              <p class="stat-value">12ms</p>
+              <p class="stat-label">p99 latency</p>
+            </div>
+            <div class="stat-box">
+              <p class="stat-value">99.97%</p>
+              <p class="stat-label">Uptime SLA</p>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">This is the high-level view of our ML platform. Four main components connected by an automated pipeline.</aside>
+      </section>
+
+      <!-- SLIDE 3: section-divider -->
+      <section class="section-divider" data-slide-id="3">
+        <p class="section-number">Part 1</p>
+        <h2>Benchmarks &amp; Results</h2>
+        <aside class="notes">Let's dive into the numbers — how our models perform across key metrics.</aside>
+      </section>
+
+      <!-- SLIDE 4: table -->
+      <section data-slide-id="4">
+        <div class="slide-header">
+          <h2>Model Performance Benchmarks</h2>
+        </div>
+        <div class="content">
+          <p class="section-label">Production model metrics — Q4 2025 evaluation window</p>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Model</th>
+                <th scope="col">Accuracy</th>
+                <th scope="col">p99 Latency</th>
+                <th scope="col">Throughput</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Fraud Detector v3</td>
+                <td class="font-mono">98.2%</td>
+                <td class="font-mono">8ms</td>
+                <td class="font-mono">12,400 rps</td>
+              </tr>
+              <tr>
+                <td>Recommendation Engine</td>
+                <td class="font-mono">91.7%</td>
+                <td class="font-mono">23ms</td>
+                <td class="font-mono">5,200 rps</td>
+              </tr>
+              <tr>
+                <td>Search Ranking</td>
+                <td class="font-mono">94.5%</td>
+                <td class="font-mono">15ms</td>
+                <td class="font-mono">8,800 rps</td>
+              </tr>
+              <tr>
+                <td>Content Classifier</td>
+                <td class="font-mono">96.1%</td>
+                <td class="font-mono">6ms</td>
+                <td class="font-mono">18,300 rps</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="notes">All models exceed our 95th percentile SLA targets. Fraud detector is our highest accuracy model.</aside>
+      </section>
+
+      <!-- SLIDE 5: problem-solution -->
+      <section data-slide-id="5">
+        <div class="slide-header">
+          <h2>Deployment Evolution</h2>
+        </div>
+        <div class="content">
+          <div class="split-row">
+            <div class="split-col">
+              <div class="emphasis-box">
+                <h4>Before: Manual Deployment</h4>
+                <ul>
+                  <li>SSH into servers to update model weights</li>
+                  <li>No rollback — revert meant retraining</li>
+                  <li>3-day lead time from training to production</li>
+                </ul>
+              </div>
+            </div>
+            <div class="split-divider"></div>
+            <div class="split-col">
+              <div class="emphasis-box-light">
+                <h4>After: Automated Pipeline</h4>
+                <ul>
+                  <li>Git-triggered CI/CD with canary deployments</li>
+                  <li>One-click rollback to any registered version</li>
+                  <li>15-minute deploy cycle with validation gates</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">The transformation from manual to automated deployment was the single biggest reliability improvement we made.</aside>
+      </section>
+
+      <!-- SLIDE 6: reference -->
+      <section data-slide-id="6">
+        <div class="slide-header">
+          <h2>Key Metrics Reference</h2>
+        </div>
+        <div class="content">
+          <div class="module-grid">
+            <div class="module">
+              <h4>p99 Latency</h4>
+              <p>99th percentile response time. Our SLA target is &lt;50ms for all models.</p>
+            </div>
+            <div class="module">
+              <h4>Feature Freshness</h4>
+              <p>Time between data generation and feature availability. Target: &lt;5 min for real-time features.</p>
+            </div>
+            <div class="module">
+              <h4>Model Drift Score</h4>
+              <p>PSI (Population Stability Index) between training and serving distributions. Alert at &gt;0.2.</p>
+            </div>
+            <div class="module">
+              <h4>GPU Utilization</h4>
+              <p>Average compute saturation across inference fleet. Cost-optimal range: 60–80%.</p>
+            </div>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Metric</th>
+                <th scope="col">Target</th>
+                <th scope="col">Current</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>p99 Latency</td><td class="font-mono">&lt;50ms</td><td class="font-mono">12ms</td><td>On track</td></tr>
+              <tr><td>Drift Score</td><td class="font-mono">&lt;0.2</td><td class="font-mono">0.08</td><td>On track</td></tr>
+              <tr><td>GPU Util.</td><td class="font-mono">60–80%</td><td class="font-mono">72%</td><td>On track</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="notes">These are the four metrics every team should monitor. We alert on drift and latency automatically.</aside>
+      </section>
+
+      <!-- SLIDE 7: timeline -->
+      <section data-slide-id="7">
+        <div class="slide-header">
+          <h2>Model Lifecycle</h2>
+        </div>
+        <div class="content">
+          <div class="timeline">
+            <div class="timeline-step">
+              <p class="timeline-num">1</p>
+              <div class="timeline-content">
+                <h4>Feature Engineering</h4>
+                <p>Define and register features in the store. Validate distributions against historical data.</p>
+              </div>
+            </div>
+            <div class="timeline-step">
+              <p class="timeline-num">2</p>
+              <div class="timeline-content">
+                <h4>Training &amp; Validation</h4>
+                <p>Distributed training with cross-validation. Hyperparameter sweep via Bayesian optimization.</p>
+              </div>
+            </div>
+            <div class="timeline-step">
+              <p class="timeline-num">3</p>
+              <div class="timeline-content">
+                <h4>Shadow Deployment</h4>
+                <p>Run new model alongside production. Compare predictions without serving to users.</p>
+              </div>
+            </div>
+            <div class="timeline-step">
+              <p class="timeline-num">4</p>
+              <div class="timeline-content">
+                <h4>Canary Release</h4>
+                <p>Route 5% of traffic to new model. Monitor metrics for 24 hours before full rollout.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">Every model goes through these four stages. Shadow deployment catches most issues before users are affected.</aside>
+      </section>
+
+      <!-- SLIDE 8: key-findings -->
+      <section data-slide-id="8">
+        <div class="slide-header">
+          <h2>Key Takeaways</h2>
+        </div>
+        <div class="content">
+          <div class="findings-grid">
+            <div class="finding">
+              <p class="finding-num">1</p>
+              <h4>Invest in Feature Stores Early</h4>
+              <p>80% of ML bugs trace back to feature inconsistencies between training and serving.</p>
+            </div>
+            <div class="finding">
+              <p class="finding-num">2</p>
+              <h4>Shadow Before You Ship</h4>
+              <p>Shadow deployments caught 3 critical regressions that unit tests missed entirely.</p>
+            </div>
+            <div class="finding">
+              <p class="finding-num">3</p>
+              <h4>Monitor Drift, Not Just Accuracy</h4>
+              <p>Accuracy stays high while drift accumulates silently. By the time accuracy drops, damage is done.</p>
+            </div>
+            <div class="finding">
+              <p class="finding-num">4</p>
+              <h4>Batch Serving Saves Money</h4>
+              <p>Moving 60% of predictions to batch reduced GPU costs by 40% with no user-visible impact.</p>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">These are the four lessons I wish we had learned earlier. Each one cost us significant engineering time.</aside>
+      </section>
+
+      <!-- SLIDE 9: comparison -->
+      <section data-slide-id="9">
+        <div class="slide-header">
+          <h2>Serving Framework Comparison</h2>
+        </div>
+        <div class="content">
+          <div class="comparison-row">
+            <div class="comparison-col">
+              <h3>TorchServe</h3>
+              <div class="comparison-item"><p class="label">Latency</p><p class="value font-mono">8ms p99</p></div>
+              <div class="comparison-item"><p class="label">GPU Memory</p><p class="value font-mono">2.1 GB</p></div>
+              <div class="comparison-item"><p class="label">Batching</p><p class="value">Dynamic, adaptive</p></div>
+              <div class="comparison-item"><p class="label">Setup</p><p class="value">Moderate — YAML config</p></div>
+            </div>
+            <div class="split-divider"></div>
+            <div class="comparison-col">
+              <h3>Triton Inference</h3>
+              <div class="comparison-item"><p class="label">Latency</p><p class="value font-mono">5ms p99</p></div>
+              <div class="comparison-item"><p class="label">GPU Memory</p><p class="value font-mono">1.8 GB</p></div>
+              <div class="comparison-item"><p class="label">Batching</p><p class="value">Static + dynamic</p></div>
+              <div class="comparison-item"><p class="label">Setup</p><p class="value">Complex — model repo</p></div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">We chose Triton for latency-critical paths and TorchServe for rapid prototyping. Both are in production.</aside>
+      </section>
+
+      <!-- SLIDE 10: notes -->
+      <section data-slide-id="10">
+        <div class="slide-header">
+          <h2>Literature: Scaling ML Systems</h2>
+        </div>
+        <div class="content">
+          <div class="notes-layout">
+            <div class="notes-main">
+              <h3>Key Arguments</h3>
+              <ul>
+                <li>Feature stores eliminate training/serving skew — the #1 source of silent failures in production ML</li>
+                <li>Continuous training pipelines outperform periodic retraining by adapting to distribution shifts in real time</li>
+                <li>Canary analysis with statistical tests (not just threshold checks) reduces bad deployments by 90%</li>
+              </ul>
+              <h3>Implications for Our Stack</h3>
+              <ul>
+                <li>Validates our investment in online feature computation and shadow serving</li>
+                <li>We should adopt their canary scoring framework (KL-divergence based)</li>
+                <li>Configuration debt is our biggest risk area — need to audit model configs quarterly</li>
+              </ul>
+              <h3>Open Questions</h3>
+              <ul>
+                <li>How do we measure "technical debt" in ML systems quantitatively?</li>
+                <li>Is the paper's 90% reduction in bad deployments reproducible at our scale?</li>
+              </ul>
+            </div>
+            <div class="notes-sidebar">
+              <h4>Reference</h4>
+              <p>Sculley et al., "Hidden Technical Debt in ML Systems," NeurIPS 2015</p>
+              <h4>Related Work</h4>
+              <p>Polyzotis et al., "Data Lifecycle Challenges in Production ML," SIGMOD 2018</p>
+              <h4>Key Concepts</h4>
+              <p>CACE principle: Changing Anything Changes Everything — entanglement in ML pipelines</p>
+              <h4>Our Takeaway</h4>
+              <p>Prioritize monitoring and testing infrastructure over model accuracy improvements</p>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">This paper is foundational. Almost every production ML challenge we've faced was predicted here.</aside>
+      </section>
+
+      <!-- SLIDE 11: panels -->
+      <section data-slide-id="11">
+        <div class="slide-header">
+          <h2>Training vs Inference</h2>
+        </div>
+        <div class="content">
+          <div class="panels-row">
+            <div class="panel">
+              <div class="panel-tab">Training Config</div>
+              <div class="panel-body">
+                <h4>GPU Cluster Setup</h4>
+                <ul>
+                  <li>8x A100 80GB per training job</li>
+                  <li>DeepSpeed ZeRO-3 for memory efficiency</li>
+                  <li>Mixed precision (bf16) by default</li>
+                </ul>
+                <h4>Data Pipeline</h4>
+                <ul>
+                  <li>Petabyte-scale feature warehouse on S3</li>
+                  <li>Apache Spark for batch feature transforms</li>
+                  <li>Flink for real-time streaming features</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-tab">Inference Config</div>
+              <div class="panel-body">
+                <h4>Serving Fleet Setup</h4>
+                <ul>
+                  <li>T4 GPUs for cost-effective inference</li>
+                  <li>TensorRT optimization for 2x speedup</li>
+                  <li>Dynamic batching with 10ms timeout</li>
+                </ul>
+                <h4>Reliability</h4>
+                <ul>
+                  <li>Multi-region failover with 99.97% SLA</li>
+                  <li>Circuit breakers with graceful degradation</li>
+                  <li>Shadow traffic replay for load testing</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">We use different GPU types for training and inference. A100s for training throughput, T4s for inference cost efficiency.</aside>
+      </section>
+
+      <!-- SLIDE 12: code -->
+      <section data-slide-id="12">
+        <div class="slide-header">
+          <h2>Model Serving Endpoint</h2>
+        </div>
+        <div class="content">
+          <div class="code-block">
+            <pre><code class="language-python" data-trim data-line-numbers="1-3|5-8|10-14">
+from fastapi import FastAPI
+from model_registry import load_model
+from feature_store import get_features
+
+app = FastAPI()
+model = load_model("fraud-detector", version="latest")
+feature_client = get_features("fraud-features")
+
+@app.post("/predict")
+async def predict(request: PredictRequest):
+    features = await feature_client.fetch(request.user_id)
+    score = model.predict(features)
+    return {"fraud_score": score, "model_version": model.version}
+            </code></pre>
+            <p class="code-caption">Minimal serving endpoint — feature fetch + model inference in 3 lines</p>
+          </div>
+        </div>
+        <aside class="notes">This is the actual serving pattern we use. FastAPI handles async I/O, the feature client fetches from Redis, and the model runs on GPU.</aside>
+      </section>
+
+      <!-- SLIDE 13: chart -->
+      <section data-slide-id="13">
+        <div class="slide-header">
+          <h2>Inference Latency Trend</h2>
+        </div>
+        <div class="content">
+          <div class="chart-container">
+            <canvas data-chart='{
+              "type": "line",
+              "data": {
+                "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                "datasets": [
+                  {
+                    "label": "p50 Latency (ms)",
+                    "data": [18, 17, 15, 14, 12, 11, 10, 9, 8, 8, 7, 7],
+                    "borderColor": "#111",
+                    "backgroundColor": "rgba(17,17,17,0.1)",
+                    "fill": true,
+                    "tension": 0.3
+                  },
+                  {
+                    "label": "p99 Latency (ms)",
+                    "data": [45, 42, 38, 35, 30, 27, 24, 20, 18, 15, 13, 12],
+                    "borderColor": "#767676",
+                    "borderDash": [5, 5],
+                    "fill": false,
+                    "tension": 0.3
+                  }
+                ]
+              },
+              "options": {
+                "maintainAspectRatio": false,
+                "scales": {
+                  "y": { "beginAtZero": true, "title": { "display": true, "text": "Latency (ms)" } }
+                },
+                "plugins": {
+                  "legend": { "position": "bottom" }
+                }
+              }
+            }'></canvas>
+          </div>
+        </div>
+        <aside class="notes">Steady improvement throughout the year. TensorRT adoption in March and batching optimization in July were the biggest wins.</aside>
+      </section>
+
+      <!-- SLIDE 14: image -->
+      <section class="image-slide contain" data-slide-id="14">
+        <img src="https://placehold.co/960x540/f5f5f5/222?text=Architecture+Diagram" alt="ML platform architecture diagram showing data flow from ingestion through feature store, training, and serving">
+        <div class="image-caption">
+          <p>End-to-end ML platform architecture — from data ingestion to model serving</p>
+        </div>
+        <aside class="notes">This diagram shows the complete data flow. Note how the feature store sits at the center, serving both training and inference paths.</aside>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js and plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/plugin/notes/notes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/plugin/math/math.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/plugin/zoom/zoom.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+  <script>
+    Reveal.initialize({
+      width: 960,
+      height: 540,
+      margin: 0,
+      minScale: 0.2,
+      maxScale: 2.0,
+
+      hash: true,
+      controls: true,
+      progress: true,
+      center: false,
+
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+
+      plugins: [RevealHighlight, RevealNotes, RevealMath.KaTeX, RevealZoom]
+    });
+
+    // Auto-initialize Chart.js canvases with data-chart attribute
+    document.querySelectorAll('canvas[data-chart]').forEach(function(canvas) {
+      try {
+        var config = JSON.parse(canvas.getAttribute('data-chart'));
+        new Chart(canvas, config);
+      } catch (e) {
+        console.error('Chart init error:', e, canvas);
+      }
+    });
+  </script>
+</body>
+</html>
