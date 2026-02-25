@@ -1,0 +1,62 @@
+<!-- Template: overview
+     Use for: System components, pipeline stages, architecture summaries.
+     Classes: .slide-header, .content, .section-title-bar, .module-grid, .module,
+              .pipeline-flow, .pipeline-step, .pipeline-arrow, .stat-row, .stat-box
+-->
+<section>
+  <div class="slide-header">
+    <!-- Optional: <span class="slide-num">{{N}}</span> -->
+    <h2>{{SLIDE_TITLE}}</h2>
+  </div>
+  <div class="content">
+
+    <p class="section-title-bar">{{MODULES_SECTION}}</p>
+    <div class="module-grid">
+      <div class="module">
+        <h4>{{MODULE_1_TITLE}}</h4>
+        <p>{{MODULE_1_DESC}}</p>
+      </div>
+      <div class="module">
+        <h4>{{MODULE_2_TITLE}}</h4>
+        <p>{{MODULE_2_DESC}}</p>
+      </div>
+      <div class="module">
+        <h4>{{MODULE_3_TITLE}}</h4>
+        <p>{{MODULE_3_DESC}}</p>
+      </div>
+      <div class="module">
+        <h4>{{MODULE_4_TITLE}}</h4>
+        <p>{{MODULE_4_DESC}}</p>
+      </div>
+      <!-- Add or remove .module blocks as needed -->
+    </div>
+
+    <p class="section-title-bar">{{PIPELINE_SECTION}}</p>
+    <div class="pipeline-flow">
+      <span class="pipeline-step">{{STEP_1}}</span>
+      <span class="pipeline-arrow">&rarr;</span>
+      <span class="pipeline-step">{{STEP_2}}</span>
+      <span class="pipeline-arrow">&rarr;</span>
+      <span class="pipeline-step">{{STEP_3}}</span>
+      <span class="pipeline-arrow">&rarr;</span>
+      <span class="pipeline-step">{{STEP_4}}</span>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <p class="stat-value">{{STAT_1_VAL}}</p>
+        <p class="stat-label">{{STAT_1_LABEL}}</p>
+      </div>
+      <div class="stat-box">
+        <p class="stat-value">{{STAT_2_VAL}}</p>
+        <p class="stat-label">{{STAT_2_LABEL}}</p>
+      </div>
+      <div class="stat-box">
+        <p class="stat-value">{{STAT_3_VAL}}</p>
+        <p class="stat-label">{{STAT_3_LABEL}}</p>
+      </div>
+    </div>
+
+  </div>
+  <aside class="notes">{{SPEAKER_NOTES}}</aside>
+</section>

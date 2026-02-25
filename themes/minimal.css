@@ -1,0 +1,50 @@
+/*
+ * Theme: Minimal
+ * White background with a single blue accent. Clean and modern.
+ * Best for: product demos, business presentations, general audiences.
+ */
+
+:root {
+  /* Core colors */
+  --color-bg: #ffffff;
+  --color-text: #374151;
+  --color-text-dark: #1f2937;
+  --color-text-muted: #6b7280;
+  --color-text-faint: #9ca3af;
+  --color-heading: #111827;
+
+  /* Accent & structural */
+  --accent-color: #2563eb;
+  --accent-text: #ffffff;
+  --header-bg: #f8fafc;
+  --header-color: #111827;
+  --border-color: #e5e7eb;
+  --bg-subtle: #f9fafb;
+  --bg-muted: #f3f4f6;
+
+  /* Typography */
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --fs-base: 16pt;
+  --fs-slide-title: 1.35rem;
+
+  /* Spacing */
+  --sp-header-v: 1.0rem;
+  --sp-header-h: 2.4rem;
+  --sp-body-v: 1.5rem;
+  --sp-body-h: 2.4rem;
+  --sp-body-gap: 1.1rem;
+
+  /* Reveal.js overrides */
+  --r-background-color: #ffffff;
+  --r-main-font: 'IBM Plex Sans', sans-serif;
+  --r-main-font-size: 16pt;
+  --r-main-color: #374151;
+  --r-heading-font: 'IBM Plex Sans', sans-serif;
+  --r-heading-color: #111827;
+  --r-heading-font-weight: 700;
+  --r-heading-text-transform: none;
+  --r-code-font: 'IBM Plex Mono', monospace;
+  --r-link-color: #2563eb;
+  --r-selection-background-color: rgba(37, 99, 235, 0.2);
+}

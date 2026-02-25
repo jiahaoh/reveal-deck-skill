@@ -1,0 +1,50 @@
+/*
+ * Theme: Swiss
+ * Clean monochrome — black, white, grey. Sharp and editorial.
+ * Best for: research presentations, data-heavy talks, academic contexts.
+ */
+
+:root {
+  /* Core colors */
+  --color-bg: #fff;
+  --color-text: #222;
+  --color-text-dark: #333;
+  --color-text-muted: #767676;
+  --color-text-faint: #999;
+  --color-heading: #111;
+
+  /* Accent & structural */
+  --accent-color: #111;
+  --accent-text: #fff;
+  --header-bg: #111;
+  --header-color: #fff;
+  --border-color: #d0d0d0;
+  --bg-subtle: #f5f5f5;
+  --bg-muted: #ebebeb;
+
+  /* Typography */
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --fs-base: 16pt;
+  --fs-slide-title: 1.35rem;
+
+  /* Spacing */
+  --sp-header-v: 1.0rem;
+  --sp-header-h: 2.4rem;
+  --sp-body-v: 1.5rem;
+  --sp-body-h: 2.4rem;
+  --sp-body-gap: 1.1rem;
+
+  /* Reveal.js overrides */
+  --r-background-color: #fff;
+  --r-main-font: 'IBM Plex Sans', sans-serif;
+  --r-main-font-size: 16pt;
+  --r-main-color: #222;
+  --r-heading-font: 'IBM Plex Sans', sans-serif;
+  --r-heading-color: #111;
+  --r-heading-font-weight: 700;
+  --r-heading-text-transform: none;
+  --r-code-font: 'IBM Plex Mono', monospace;
+  --r-link-color: #444;
+  --r-selection-background-color: rgba(0, 0, 0, 0.15);
+}

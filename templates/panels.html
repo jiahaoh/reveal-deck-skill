@@ -1,0 +1,41 @@
+<!-- Template: panels
+     Use for: Tabbed side-by-side panels with optional images and bullet content.
+     Classes: .slide-header, .content, .panels-row, .panel, .panel-tab, .panel-body
+-->
+<section>
+  <div class="slide-header">
+    <h2>{{SLIDE_TITLE}}</h2>
+  </div>
+  <div class="content">
+    <div class="panels-row">
+
+      <div class="panel">
+        <div class="panel-tab">{{PANEL_A_TAB}}</div>
+        <div class="panel-body">
+          <!-- Optional image: <img src="{{PANEL_A_IMAGE}}" alt=""> -->
+          <h4>{{PANEL_A_HEADING}}</h4>
+          <ul>
+            <li>{{PANEL_A_POINT_1}}</li>
+            <li>{{PANEL_A_POINT_2}}</li>
+            <li>{{PANEL_A_POINT_3}}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-tab">{{PANEL_B_TAB}}</div>
+        <div class="panel-body">
+          <!-- Optional image: <img src="{{PANEL_B_IMAGE}}" alt=""> -->
+          <h4>{{PANEL_B_HEADING}}</h4>
+          <ul>
+            <li>{{PANEL_B_POINT_1}}</li>
+            <li>{{PANEL_B_POINT_2}}</li>
+            <li>{{PANEL_B_POINT_3}}</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <aside class="notes">{{SPEAKER_NOTES}}</aside>
+</section>

@@ -1,0 +1,50 @@
+/*
+ * Theme: Warm
+ * Parchment tones with saddlebrown accents.
+ * Best for: humanities, social sciences, narrative-driven talks.
+ */
+
+:root {
+  /* Core colors */
+  --color-bg: #faf8f5;
+  --color-text: #3d3029;
+  --color-text-dark: #2c1810;
+  --color-text-muted: #8b7355;
+  --color-text-faint: #a89279;
+  --color-heading: #2c1810;
+
+  /* Accent & structural */
+  --accent-color: #8b4513;
+  --accent-text: #faf8f5;
+  --header-bg: #3d2b1f;
+  --header-color: #f5ebe0;
+  --border-color: #d4c4b0;
+  --bg-subtle: #f0ebe4;
+  --bg-muted: #e8dfd4;
+
+  /* Typography */
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --fs-base: 16pt;
+  --fs-slide-title: 1.35rem;
+
+  /* Spacing */
+  --sp-header-v: 1.0rem;
+  --sp-header-h: 2.4rem;
+  --sp-body-v: 1.5rem;
+  --sp-body-h: 2.4rem;
+  --sp-body-gap: 1.1rem;
+
+  /* Reveal.js overrides */
+  --r-background-color: #faf8f5;
+  --r-main-font: 'IBM Plex Sans', sans-serif;
+  --r-main-font-size: 16pt;
+  --r-main-color: #3d3029;
+  --r-heading-font: 'IBM Plex Sans', sans-serif;
+  --r-heading-color: #2c1810;
+  --r-heading-font-weight: 700;
+  --r-heading-text-transform: none;
+  --r-code-font: 'IBM Plex Mono', monospace;
+  --r-link-color: #8b4513;
+  --r-selection-background-color: rgba(139, 69, 19, 0.2);
+}

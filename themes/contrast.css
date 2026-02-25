@@ -1,0 +1,50 @@
+/*
+ * Theme: Contrast
+ * True black background with gold accents. Bold and high-impact.
+ * Best for: keynotes, high-energy talks, accessibility-first contexts.
+ */
+
+:root {
+  /* Core colors */
+  --color-bg: #000000;
+  --color-text: #d4d4d4;
+  --color-text-dark: #ffffff;
+  --color-text-muted: #a0a0a0;
+  --color-text-faint: #737373;
+  --color-heading: #ffffff;
+
+  /* Accent & structural */
+  --accent-color: #fbbf24;
+  --accent-text: #000000;
+  --header-bg: #171717;
+  --header-color: #ffffff;
+  --border-color: #404040;
+  --bg-subtle: #171717;
+  --bg-muted: #262626;
+
+  /* Typography */
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --fs-base: 16pt;
+  --fs-slide-title: 1.35rem;
+
+  /* Spacing */
+  --sp-header-v: 1.0rem;
+  --sp-header-h: 2.4rem;
+  --sp-body-v: 1.5rem;
+  --sp-body-h: 2.4rem;
+  --sp-body-gap: 1.1rem;
+
+  /* Reveal.js overrides */
+  --r-background-color: #000000;
+  --r-main-font: 'IBM Plex Sans', sans-serif;
+  --r-main-font-size: 16pt;
+  --r-main-color: #d4d4d4;
+  --r-heading-font: 'IBM Plex Sans', sans-serif;
+  --r-heading-color: #ffffff;
+  --r-heading-font-weight: 700;
+  --r-heading-text-transform: none;
+  --r-code-font: 'IBM Plex Mono', monospace;
+  --r-link-color: #fbbf24;
+  --r-selection-background-color: rgba(251, 191, 36, 0.25);
+}

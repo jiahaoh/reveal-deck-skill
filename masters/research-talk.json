@@ -1,0 +1,16 @@
+{
+  "name": "research-talk",
+  "description": "Standard academic research presentation (15-20 min talk).",
+  "structure": "title,d,overview,d,timeline,table,d,key-findings,comparison,d,notes",
+  "sections": [
+    { "slides": ["title"], "purpose": "Title slide with paper/project name, author, affiliation, date" },
+    { "slides": ["overview"], "purpose": "Background and motivation — what problem, why it matters" },
+    { "slides": ["timeline"], "purpose": "Methods — experimental protocol or computational pipeline" },
+    { "slides": ["table"], "purpose": "Results — benchmark data, quantitative outcomes" },
+    { "slides": ["key-findings"], "purpose": "Key takeaways — 3-4 main conclusions" },
+    { "slides": ["comparison"], "purpose": "Discussion — compare with baselines or prior work" },
+    { "slides": ["notes"], "purpose": "Conclusion + references" }
+  ],
+  "suggested_themes": ["swiss", "dark"],
+  "notes": "Dividers separate: Intro | Methods | Results | Discussion. Add chart or image slides as needed for figures."
+}

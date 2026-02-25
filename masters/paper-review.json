@@ -1,0 +1,17 @@
+{
+  "name": "paper-review",
+  "description": "Journal club / paper review presentation.",
+  "structure": "title,overview,d,panels,timeline,d,table,key-findings,d,comparison,notes",
+  "sections": [
+    { "slides": ["title"], "purpose": "Paper title, authors, journal, year" },
+    { "slides": ["overview"], "purpose": "Paper overview — problem statement, contribution summary" },
+    { "slides": ["panels"], "purpose": "Related work — side-by-side comparison of prior approaches" },
+    { "slides": ["timeline"], "purpose": "Methods — step-by-step protocol or algorithm" },
+    { "slides": ["table"], "purpose": "Main results — tables/benchmarks from the paper" },
+    { "slides": ["key-findings"], "purpose": "Key findings — most important results and conclusions" },
+    { "slides": ["comparison"], "purpose": "Strengths vs limitations — critical analysis" },
+    { "slides": ["notes"], "purpose": "Discussion questions + full citation" }
+  ],
+  "suggested_themes": ["swiss", "warm"],
+  "notes": "Dividers separate: Overview | Methods & Results | Analysis. Add image slides for key figures from the paper."
+}

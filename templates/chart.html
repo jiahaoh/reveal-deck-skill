@@ -1,0 +1,34 @@
+<!-- Template: chart
+     Use for: Data visualizations — bar, line, pie, scatter, radar charts.
+     Classes: .slide-header, .content, .chart-container
+     Chart.js config is passed via data-chart attribute on <canvas>.
+     The Reveal.initialize() script auto-initializes all data-chart canvases.
+-->
+<section>
+  <div class="slide-header">
+    <h2>{{SLIDE_TITLE}}</h2>
+  </div>
+  <div class="content">
+    <div class="chart-container">
+      <canvas data-chart='{
+        "type": "{{CHART_TYPE}}",
+        "data": {
+          "labels": [{{LABELS}}],
+          "datasets": [{
+            "label": "{{DATASET_LABEL}}",
+            "data": [{{DATA_VALUES}}],
+            "backgroundColor": [{{COLORS}}]
+          }]
+        },
+        "options": {
+          "responsive": true,
+          "maintainAspectRatio": false,
+          "plugins": {
+            "legend": { "position": "bottom", "labels": { "font": { "size": 11 } } }
+          }
+        }
+      }'></canvas>
+    </div>
+  </div>
+  <aside class="notes">{{SPEAKER_NOTES}}</aside>
+</section>

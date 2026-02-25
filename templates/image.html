@@ -1,0 +1,20 @@
+<!-- Template: image
+     Use for: Full-bleed images, captioned figures, diagrams.
+     Classes: .image-slide, .image-slide.contain, .image-caption
+
+     Option A — full-bleed cover image:
+       <section class="image-slide"> + object-fit:cover
+
+     Option B — contained with padding:
+       <section class="image-slide contain"> + object-fit:contain
+
+     Option C — use data-background-image on <section> for bg images:
+       <section data-background-image="path.jpg" data-background-size="cover">
+
+     Caption is optional — positioned at the bottom.
+-->
+<section class="image-slide">
+  <img src="{{IMAGE_SRC}}" alt="{{IMAGE_ALT}}">
+  <div class="image-caption">{{CAPTION}}</div>
+  <aside class="notes">{{SPEAKER_NOTES}}</aside>
+</section>

@@ -1,0 +1,15 @@
+{
+  "name": "project-update",
+  "description": "Weekly/biweekly project status update.",
+  "structure": "title,overview,d,timeline,problem-solution,d,table,key-findings",
+  "sections": [
+    { "slides": ["title"], "purpose": "Project name, date, team" },
+    { "slides": ["overview"], "purpose": "Project overview — goals, current status, key metrics" },
+    { "slides": ["timeline"], "purpose": "Progress — what was accomplished this period" },
+    { "slides": ["problem-solution"], "purpose": "Blockers and solutions — issues encountered and how they were resolved" },
+    { "slides": ["table"], "purpose": "Metrics/data — quantitative progress tracking" },
+    { "slides": ["key-findings"], "purpose": "Next steps — upcoming milestones and action items" }
+  ],
+  "suggested_themes": ["minimal", "swiss"],
+  "notes": "Dividers separate: Status | Challenges | Next Steps. Keep concise — 10 slides max."
+}

@@ -1,0 +1,50 @@
+/*
+ * Theme: Dark
+ * GitHub-dark inspired — deep navy background, cool blue accents.
+ * Best for: engineering talks, tech demos, developer audiences.
+ */
+
+:root {
+  /* Core colors */
+  --color-bg: #0d1117;
+  --color-text: #c9d1d9;
+  --color-text-dark: #e6edf3;
+  --color-text-muted: #8b949e;
+  --color-text-faint: #6e7681;
+  --color-heading: #f0f6fc;
+
+  /* Accent & structural */
+  --accent-color: #58a6ff;
+  --accent-text: #0d1117;
+  --header-bg: #161b22;
+  --header-color: #f0f6fc;
+  --border-color: #30363d;
+  --bg-subtle: #161b22;
+  --bg-muted: #21262d;
+
+  /* Typography */
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --fs-base: 16pt;
+  --fs-slide-title: 1.35rem;
+
+  /* Spacing */
+  --sp-header-v: 1.0rem;
+  --sp-header-h: 2.4rem;
+  --sp-body-v: 1.5rem;
+  --sp-body-h: 2.4rem;
+  --sp-body-gap: 1.1rem;
+
+  /* Reveal.js overrides */
+  --r-background-color: #0d1117;
+  --r-main-font: 'IBM Plex Sans', sans-serif;
+  --r-main-font-size: 16pt;
+  --r-main-color: #c9d1d9;
+  --r-heading-font: 'IBM Plex Sans', sans-serif;
+  --r-heading-color: #f0f6fc;
+  --r-heading-font-weight: 700;
+  --r-heading-text-transform: none;
+  --r-code-font: 'IBM Plex Mono', monospace;
+  --r-link-color: #58a6ff;
+  --r-selection-background-color: rgba(88, 166, 255, 0.25);
+}

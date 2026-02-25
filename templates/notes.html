@@ -1,0 +1,37 @@
+<!-- Template: notes
+     Use for: Reading notes with paper reference sidebar, annotated summaries.
+     Classes: .slide-header, .content, .notes-layout, .notes-main, .notes-sidebar
+-->
+<section>
+  <div class="slide-header">
+    <h2>{{SLIDE_TITLE}}</h2>
+  </div>
+  <div class="content">
+    <div class="notes-layout">
+
+      <div class="notes-main">
+        <h3>{{NOTES_HEADING_1}}</h3>
+        <ul>
+          <li>{{NOTE_1}}</li>
+          <li>{{NOTE_2}}</li>
+          <li>{{NOTE_3}}</li>
+        </ul>
+        <h3>{{NOTES_HEADING_2}}</h3>
+        <ul>
+          <li>{{NOTE_4}}</li>
+          <li>{{NOTE_5}}</li>
+        </ul>
+      </div>
+
+      <div class="notes-sidebar">
+        <h4>{{SIDEBAR_TITLE}}</h4>
+        <p>{{SIDEBAR_LINE_1}}</p>
+        <p>{{SIDEBAR_LINE_2}}</p>
+        <p>{{SIDEBAR_LINE_3}}</p>
+        <p>{{SIDEBAR_LINE_4}}</p>
+      </div>
+
+    </div>
+  </div>
+  <aside class="notes">{{SPEAKER_NOTES}}</aside>
+</section>
