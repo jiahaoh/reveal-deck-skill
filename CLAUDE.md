@@ -11,8 +11,11 @@ A Claude skill for creating professional reveal.js presentations as self-contain
 All utilities are Python scripts with no build step required:
 
 ```bash
-# Scaffold a new presentation
+# Scaffold a new presentation (placeholder content)
 python scripts/create_deck.py --structure "title,overview,d,table,key-findings" --title "My Talk" --theme swiss --output ./deck/
+
+# Build from YAML content file (pre-filled content)
+python scripts/build_from_yaml.py deck.yaml --output ./deck --theme swiss
 
 # Validate all slides fit within 960x540 (overflow = hard failure)
 python scripts/check_overflow.py presentation.html
@@ -27,16 +30,23 @@ python scripts/export_pdf.py presentation.html --output talk.pdf
 python scripts/edit_deck.py presentation.html --port 8000
 ```
 
-Export scripts require Playwright:
+YAML build requires PyYAML; export scripts require Playwright:
 ```bash
+pip install --break-system-packages pyyaml
 pip install --break-system-packages playwright
 python -m playwright install chromium
 ```
 
 ## Architecture
 
-The skill follows a strict 7-step workflow defined in `SKILL.md`:
+The skill supports two workflows defined in `SKILL.md`:
 
+**YAML workflow** (when user provides a `.yaml` content file):
+1. **Build** with `scripts/build_from_yaml.py deck.yaml` → content pre-filled from YAML
+2. **Fill custom layouts** — replace `<!-- LAYOUT: ... -->` placeholders if any slides use `layout:` key
+3. **Validate** overflow → **Deliver**
+
+**Standard workflow** (conversational):
 1. **Gather context** from the user
 2. **Plan** narrative arc, slide structure, theme selection
 3. **Scaffold** with `scripts/create_deck.py` → produces `presentation.html` + `styles.css`

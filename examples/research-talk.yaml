@@ -1,0 +1,132 @@
+title: "Deep Learning for Molecular Property Prediction"
+theme: swiss
+output: ./deck
+
+slides:
+  - template: title
+    title: "Deep Learning for Molecular Property Prediction"
+    subtitle: "Novel GNN Architectures for Drug Discovery"
+    author: "Jane Doe, MIT CSAIL"
+    date: "February 2026"
+    notes: "Welcome everyone. Today I'll present our work on molecular property prediction."
+
+  - divider: "Background & Motivation"
+
+  - template: overview
+    title: "System Architecture"
+    modules_label: "Core Components"
+    modules:
+      - title: "Molecular Encoder"
+        description: "GNN-based structure encoding with attention"
+      - title: "Property Predictor"
+        description: "Multi-task regression head with uncertainty"
+      - title: "Data Augmenter"
+        description: "SMILES enumeration and conformer sampling"
+      - title: "Active Learner"
+        description: "Uncertainty-guided compound selection"
+    pipeline_label: "Inference Pipeline"
+    pipeline:
+      - "SMILES Input"
+      - "3D Conformer"
+      - "GNN Encoding"
+      - "Prediction"
+    stats:
+      - value: "94.2%"
+        label: "AUC-ROC"
+      - value: "1.2M"
+        label: "Compounds"
+      - value: "< 50ms"
+        label: "Inference"
+    notes: "Our system has four main components. The pipeline processes molecules end-to-end in under 50ms."
+
+  - divider: "Methods"
+
+  - template: timeline
+    title: "Experimental Protocol"
+    label: "Methodology"
+    steps:
+      - title: "Data Collection"
+        description: "1.2M compounds from ChEMBL 33, filtered for drug-likeness"
+      - title: "Feature Engineering"
+        description: "3D conformer generation via RDKit, atom/bond featurization"
+      - title: "Model Training"
+        description: "5-fold stratified CV, AdamW optimizer, cosine annealing"
+      - title: "Evaluation"
+        description: "Held-out test + external validation on MoleculeNet"
+    notes: "We followed a rigorous 4-step protocol to ensure reproducibility."
+
+  - template: table
+    title: "Benchmark Results"
+    label: "MoleculeNet Comparison (AUC-ROC)"
+    columns: ["Dataset", "Our Model", "SchNet", "MPNN", "D-MPNN"]
+    rows:
+      - ["BBBP", "94.2 +/- 0.3", "89.1 +/- 0.5", "91.3 +/- 0.4", "92.0 +/- 0.3"]
+      - ["Tox21", "87.5 +/- 0.2", "82.3 +/- 0.6", "84.1 +/- 0.3", "85.8 +/- 0.4"]
+      - ["HIV", "80.1 +/- 0.4", "75.2 +/- 0.8", "77.6 +/- 0.5", "78.3 +/- 0.6"]
+      - ["BACE", "88.3 +/- 0.3", "83.7 +/- 0.5", "85.9 +/- 0.4", "86.5 +/- 0.4"]
+    notes: "Our model achieves state-of-the-art on all four benchmarks."
+
+  - divider: "Analysis"
+
+  - template: key-findings
+    title: "Key Takeaways"
+    label: "Summary of Results"
+    findings:
+      - title: "State-of-the-Art Performance"
+        description: "Consistent 3-7 point improvement over baselines across all MoleculeNet tasks"
+      - title: "Computational Efficiency"
+        description: "3x faster inference than SchNet through graph-level pooling optimization"
+      - title: "Data Efficiency"
+        description: "Achieves 90% of full performance with only 20% of training data via active learning"
+      - title: "Generalization"
+        description: "Strong transfer to unseen scaffolds, confirming learned representations are chemical rather than structural"
+    notes: "Four main takeaways from our experiments."
+
+  - template: comparison
+    title: "GNN vs. Fingerprint Approaches"
+    column_a:
+      title: "GNN (Ours)"
+      items:
+        - label: "Representation"
+          value: "Learned, task-specific"
+        - label: "3D Structure"
+          value: "Native support"
+        - label: "Scalability"
+          value: "O(n) with sparse ops"
+        - label: "Interpretability"
+          value: "Attention visualization"
+    column_b:
+      title: "Morgan Fingerprints"
+      items:
+        - label: "Representation"
+          value: "Fixed, hand-crafted"
+        - label: "3D Structure"
+          value: "Not supported"
+        - label: "Scalability"
+          value: "O(1) per molecule"
+        - label: "Interpretability"
+          value: "Bit attribution"
+    notes: "GNNs offer richer representations but fingerprints remain faster for large-scale screening."
+
+  - divider: "Conclusion"
+
+  - template: notes
+    title: "Summary & Future Work"
+    main:
+      - heading: "Contributions"
+        items:
+          - "Novel GNN architecture with 3D-aware message passing"
+          - "State-of-the-art on 4 MoleculeNet benchmarks"
+          - "Open-source implementation and pretrained weights"
+      - heading: "Future Directions"
+        items:
+          - "Extend to protein-ligand binding affinity"
+          - "Incorporate quantum-mechanical descriptors"
+    sidebar:
+      title: "References"
+      items:
+        - "Gilmer et al. (2017) ICML"
+        - "Yang et al. (2019) JCIM"
+        - "Schutt et al. (2018) JCP"
+        - "github.com/doe-lab/mol-gnn"
+    notes: "Thank you. Questions? Code and data available at the GitHub link."

@@ -23,7 +23,9 @@ All companions are co-located with this skill file.
 | `references/advanced-features.md` | Fragments, auto-animate, backgrounds, transitions, code highlighting, math | When using advanced reveal.js features |
 | `references/charts.md` | Chart.js integration — all chart types, layout patterns, styling | When adding charts |
 | `masters/<name>.json` | Pre-built deck structures for common presentation types | When user asks for a research talk, paper review, etc. |
+| `yaml-schema.md` | YAML content file schema reference — all templates and field names | When user provides a YAML file or wants YAML workflow |
 | `scripts/create_deck.py` | Scaffold generator — creates presentation.html + styles.css | Step 3 of workflow |
+| `scripts/build_from_yaml.py` | Build from YAML — generates populated presentation from a .yaml content file | YAML workflow |
 | `scripts/check_overflow.py` | Playwright overflow detector | Step 6 of workflow |
 | `scripts/export_slides.py` | Playwright PNG exporter | When user requests PNG export |
 | `scripts/export_pdf.py` | Playwright PDF exporter | When user requests PDF export |
@@ -105,6 +107,28 @@ Before writing any HTML, internalize these rules:
 ---
 
 ## Workflow
+
+There are two workflows. Use the **YAML workflow** when the user provides a `.yaml` content file or asks to use YAML. Use the **standard workflow** when the user describes content conversationally.
+
+### YAML Workflow
+
+When the user provides a YAML file (or you create one from their content), build the deck directly:
+
+1. **Read** `yaml-schema.md` if you need to check field names or template options.
+2. **Build** the presentation:
+   ```bash
+   python "<skill-dir>/scripts/build_from_yaml.py" deck.yaml --output "<output-dir>"
+   ```
+   This generates `presentation.html` + `styles.css` with content pre-filled from the YAML.
+3. **Fill custom layouts** — if any slides use `layout:` (natural language descriptions), search for `<!-- LAYOUT:` in the HTML and replace the placeholder `<div class="content">` with appropriate HTML using the CSS classes from `components.md`.
+4. **Validate** overflow with `check_overflow.py` (same as Step 6 below).
+5. **Deliver** (same as Step 7 below).
+
+The YAML file supports all 13 templates plus custom layouts described in natural language. See `yaml-schema.md` for the full schema and `examples/research-talk.yaml` for a complete example.
+
+---
+
+### Standard Workflow
 
 ### Step 1: Gather Context
 
